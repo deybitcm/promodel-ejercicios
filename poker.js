@@ -149,9 +149,9 @@ function Poker (numerosGenerados, cantidadNumeros, alpha, gradosLibertad) {
 
   let chicuadradoTeorico = jStat.chisquare.inv( 1 - alpha, gradosLibertad - 1);
 
-  console.log(`\n Xi = ${chicuadradoCalculado.toFixed(4)} ${chicuadradoCalculado <= chicuadradoTeorico ? "<=" : ">"} X_alpha = ${chicuadradoTeorico.toFixed(4)}\n`)
+  console.log(`\n Xi = ${chicuadradoCalculado.toFixed(4)} ${chicuadradoCalculado <= chicuadradoTeorico ? "<" : ">"} X_alpha = ${chicuadradoTeorico.toFixed(4)}\n`)
   
-  chicuadradoCalculado <= chicuadradoTeorico ? 
+  chicuadradoCalculado < chicuadradoTeorico ? 
   console.log("Se acepta hipotesis nula: Los numeros son independientes") : 
   console.log("Se rechaza hipotesis nula: Los numeros NO son independientes");
 }
