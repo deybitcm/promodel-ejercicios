@@ -65,10 +65,7 @@ function extraerCategoria(valoresAleatorios) {
     }    
 
     for(let i in tipos) {
-      let arregloCantidadGrupo = valor.filter((cantidad) => {
-        return cantidad == i;
-      });
-      tipos[i] = arregloCantidadGrupo.length;
+      tipos[i] = valor.filter((cantidad) => cantidad == i ).length;
     }
 
     valoresTipoCategoria.push(Object.values(tipos).join(''));
