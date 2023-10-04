@@ -2,9 +2,12 @@ import jstat from 'jstat';
 const {jStat} = jstat;
 
 //1. funcion generadora de numeros pseudoaleatorios
-function generadorCongruencialMultiplicativo(seed, a, m, cantidad) {
+function generadorCongruencialMultiplicativo(seed, k, g, cantidad) {
   const numerosAleatorios = [];
   let xn = seed;
+  let a = 5 + 8 * k;
+  let m = 2 ** g; // eg. 2^32 = 4294967296
+  
 
   for (let i = 0; i < cantidad; i++) {
     xn = (a * xn) % m;
@@ -44,12 +47,10 @@ function extraerCategoria(valoresAleatorios) {
     }
 
     for (let i in cuenta) {
-      let aux = valor.matchAll(i);
-      cuenta[i] = Array.from(aux).length;
+      cuenta[i] = Array.from(valor.matchAll(i)).length;
     }
 
     valoresCategorias.push(Object.values(cuenta));
-
   });
 
   // Contar la cantidad de grupos de pares, trios, cuartetos, quintillas, y solitarios
@@ -148,23 +149,22 @@ function Poker (numerosGenerados, cantidadNumeros, alpha, gradosLibertad) {
 
   let chicuadradoTeorico = jStat.chisquare.inv( 1 - alpha, gradosLibertad - 1);
 
-  console.log(`Xi = ${chicuadradoCalculado} ; X_alpha = ${chicuadradoTeorico} \r\n`)
-  chicuadradoCalculado <= chicuadradoTeorico ? console.log("Se acepta hipotesis nula: Los numeros son independientes") : console.log("Se rechaza hipotesis nula: Los numeros NO son independientes");
+  console.log(`\n Xi = ${chicuadradoCalculado} <= X_alpha = ${chicuadradoTeorico} ?\n`)
+  chicuadradoCalculado <= chicuadradoTeorico ? 
+  console.log("Se acepta hipotesis nula: Los numeros son independientes") : 
+  console.log("Se rechaza hipotesis nula: Los numeros NO son independientes");
 }
 
 // Uso del generador con una semilla, multiplicador y módulo específicos.
 const k = 6;
-const seed = 43125; // X[0]
 const g = 14;
-
-const a = 5 + 8 * k;
-const m = 2 ** g; // eg. 2^32 = 4294967296
+const seed = 43125; // X[0]
 const cantidadNumeros = 100;
 
 //Valores para algoritmo
 const alpha = 0.05;
 const gradosLibertad = 7;
 
-let numerosGenerados = generadorCongruencialMultiplicativo(seed, a, m, cantidadNumeros);
+let numerosGenerados = generadorCongruencialMultiplicativo(seed, k, g, cantidadNumeros);
 
 Poker(numerosGenerados, cantidadNumeros, alpha, gradosLibertad);
