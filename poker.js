@@ -1,6 +1,19 @@
 import jstat from 'jstat';
 const {jStat} = jstat;
 
+//0. Funcion para generar numeros Telefonicos con 5 digitos
+function generadorNumerosTelefonicos(cantidadNumeros) {
+  let arregloNumerosTelefonicos = [];
+
+  for( let i = 0; i < cantidadNumeros; i++ ) {
+    let number = Math.floor(Math.random()*(99999));
+    let numeroaCadena = number.toString().padStart(5,'0');
+    arregloNumerosTelefonicos.push(numeroaCadena);
+  }
+
+  return arregloNumerosTelefonicos;
+}
+
 //1. funcion generadora de numeros pseudoaleatorios
 function generadorCongruencialMultiplicativo(seed, k, g, cantidad) {
   const numerosAleatorios = [];
@@ -123,9 +136,9 @@ function contarCategorias(arregloCategorias) {
 
 //5. Funcion final para devolver el resultado del algoritmo eg. Hipotesis nula aceptada
 function Poker (numerosGenerados, cantidadNumeros, alpha, gradosLibertad) {
-  const numerosTruncados = extraerDigitosPoker(numerosGenerados);
+  //const numerosTruncados = extraerDigitosPoker(numerosGenerados);
 
-  const valoresCategoria = extraerCategoria(numerosTruncados);
+  const valoresCategoria = extraerCategoria(numerosGenerados);
 
   const tablaCantObservadas = contarCategorias(valoresCategoria);
 
@@ -157,15 +170,17 @@ function Poker (numerosGenerados, cantidadNumeros, alpha, gradosLibertad) {
 }
 
 // Uso del generador con una semilla, multiplicador y módulo específicos.
+/*
 const k = 6;
 const g = 14;
-const seed = 43125; // X[0]
-const cantidadNumeros = 100;
+const seed = 43125; // X[0] */
+
+const cantidadNumeros = 50;
 
 //Valores para algoritmo
 const alpha = 0.05;
 const gradosLibertad = 7;
 
-let numerosGenerados = generadorCongruencialMultiplicativo(seed, k, g, cantidadNumeros);
+//let numerosGenerados = generadorCongruencialMultiplicativo(seed, k, g, cantidadNumeros);
 
-Poker(numerosGenerados, cantidadNumeros, alpha, gradosLibertad);
+Poker(generadorNumerosTelefonicos(50), cantidadNumeros, alpha, gradosLibertad);
